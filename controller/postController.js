@@ -2,28 +2,14 @@ const mongoose = require("mongoose");
 const moment = require("moment");
 const eloRank = require("elo-rank");
 const Post = mongoose.model("posts");
+const Challenge = mongoose.model("challenges");
 const cloudinary = require("cloudinary");
 const datauri = require("datauri");
 const path = require("path");
-
-const config = {
-  cloudinary: {
-    standardTransformation: {
-      border: "2px_solid_rgb:000000",
-      flags: "awebp",
-      gravity: "center",
-      height: 400,
-      quality: "auto",
-      radius: 14,
-      width: 400,
-      crop: "fill",
-      format: "webp"
-    }
-  }
-};
+const config = require("../config/cloudinaryConfig");
 
 cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
+  cloud_name: process.env.CLOUDINARY_NAME,
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET
 });
@@ -45,10 +31,6 @@ const calculateLoser = (loser, winner) => {
   let expectedScore = elo.getExpected(loser.eloRank, winner.eloRank);
   let newScore = elo.updateRating(expectedScore, 0, loser.eloRank);
   return newScore;
-};
-
-exports.postCloudinaryImage = (req, res) => {
-  console.log(req);
 };
 
 exports.getPosts = async (req, res) => {
@@ -78,10 +60,6 @@ exports.getPosts = async (req, res) => {
     query.dateCreated = { $gte: calculatedPeriod.toISOString() };
   }
 
-  if (challengeId) {
-    query.challengeId = challengeId;
-  }
-
   const posts = await Post.find(query)
     .limit(20)
     .sort("-eloRank");
@@ -97,20 +75,21 @@ exports.getPost = async (req, res) => {
 };
 
 exports.getRandomPosts = async (req, res) => {
+  const { size } = req.params;
   // Pick a random challenge, pick 2 random posts from that challenge category then return the results
-  randomChallenge = Challenge.aggregate([{ $sample: { size: 1 } }]);
-  randomPosts = db.Post.aggregate([
+  randomChallenge = await Challenge.aggregate([{ $sample: { size: 1 } }]);
+  randomPosts = await Post.aggregate([
     { $match: { challengeId: randomChallenge[0]._id } },
     { $sample: { size: 2 } }
   ]);
-  res.json(randomPosts);
-  // .then(posts => {
-  //   // Creating a property on the post object that adds the cloudinary url
-  //   posts.forEach(post => {
-  //     post.cloudinaryUrl = getCloudinaryUrl(post.cloudinaryRef);
-  //   });
-  //   cb({ challenge: challenges[0], posts });
-  // });
+
+  randomPosts.forEach(post => {
+    post.cloudinaryUrl = cloudinary.url(
+      post.cloudinaryRef,
+      config.cloudinary.standardTransformation
+    );
+  });
+  res.json({ competitors: randomPosts, currentChallenge: randomChallenge[0] });
 };
 
 exports.saveResult = async (req, res) => {

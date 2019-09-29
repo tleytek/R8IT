@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Router, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchUser } from "../actions";
-import Paper from "@material-ui/core/Paper";
-import Container from "@material-ui/core/Container";
 import Header from "../components/Header";
 import PrivateRoute from "../components/PrivateRoute";
 import Login from "./Login";
@@ -55,13 +53,7 @@ class App extends Component {
 }
 const appWithStyles = withStyles(styles)(App);
 
-const mapStateToProps = state => {
-  return {
-    auth: state.auth
-  };
-};
-
 export default connect(
-  mapStateToProps,
+  null,
   { fetchUser }
 )(appWithStyles);

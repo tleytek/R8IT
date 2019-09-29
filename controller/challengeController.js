@@ -12,9 +12,12 @@ exports.findAllChallenges = async (req, res) => {
 };
 exports.auditChallenge = async (req, res) => {
   // Change audit field to true therefore it passed an admin check.
-  const challenge = Challenge.findByIdAndUpdate(challengeId, (err, res) => {
-    res.json(challenge);
-  });
+  const challenge = await Challenge.findByIdAndUpdate(
+    challengeId,
+    (err, res) => {
+      res.json(challenge);
+    }
+  );
 };
 exports.deleteChallenge = async (req, res) => {
   dbChallenge.UserChallenge.findByIdAndDelete(challengeId, (err, res) => {
@@ -26,13 +29,3 @@ exports.getRandomChallenge = async (req, res) => {
   const randomChallenge = await Challenge.aggregate([{ $sample: { size: 1 } }]);
   res.json(randomChallenge);
 };
-// establishChallenge: function(challenge, cb) {
-//   dbChallenge.RandomChallenge.findByIdAndDelete(challenge, (err, res) => {
-//     if (err) console.log(err);
-//     const { verb, noun } = res;
-//     new dbChallenge.Challenge({ verb, noun }).save((err, result) => {
-//       if (err) console.log(err);
-//       cb(result);
-//     });
-//   });
-// },

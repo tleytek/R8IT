@@ -6,14 +6,14 @@ const multerOptions = {
   limits: {
     // storing images files up to 1mb
     fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: (req, file, next) => {
+    if (file.mimetype.startsWith("image/")) {
+      next(null, true);
+    } else {
+      next(null, false);
+    }
   }
-  // fileFilter: (req, file, next) => {
-  //   if (file.mimetype.startsWith("image/")) {
-  //     next(null, true);
-  //   } else {
-  //     next(null, false);
-  //   }
-  // }
 };
 
 // Technique #1
@@ -24,8 +24,7 @@ router.post(
   multer(multerOptions).single("image"),
   postController.submitPost
 );
-router.get("/random", postController.getRandomPosts);
-// router.post("create", postController.submitPost);
+router.get("/random/:size", postController.getRandomPosts);
 
 // Technique #2
 // router.route('/getPosts/:period?').get(postController.getPosts);

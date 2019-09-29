@@ -1,5 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { fetchPosts } from "../actions";
+import PaperContainer from "../components/PaperContainer";
 // import API from "../../utils/API";
 // import styled from "styled-components";
 
@@ -12,11 +14,10 @@ import { Link } from "react-router-dom";
 //   }
 // `;
 
-class Challenge extends React.Component {
-  state = {
-    user: "anon"
-  };
-
+const Rate = ({ fetchPosts, competitors, currentChallenge }) => {
+  useEffect(() => {
+    fetchPosts(2);
+  }, []);
   // componentDidMount() {
   //   API.getComparables()
   //     .then(challengers => {
@@ -51,16 +52,19 @@ class Challenge extends React.Component {
   //       .catch(err => console.log(err));
   //   }
   // };
-
-  render() {
-    if (!this.state.challenge) {
-      return (
+  if (!competitors) {
+    return <div>loading</div>;
+  } else {
+    return (
+      <PaperContainer>
+        {console.log(competitors)}
+        <img src={competitors[0].cloudinaryUrl} />
+        <img src={competitors[1].cloudinaryUrl} />
+        {/* if (!this.state.challenge) {
         <div className="alert alert-primary" role="alert">
           <p>Hold on a moment, while we sort through out posts.</p>
         </div>
-      );
     } else if (!this.state.posts || this.state.posts.length <= 1) {
-      return (
         <div className="alert alert-danger" role="alert">
           <p>
             The {this.state.challenge.verb} {this.state.challenge.noun}{" "}
@@ -81,9 +85,7 @@ class Challenge extends React.Component {
             for another random challenge cateogry.
           </p>
         </div>
-      );
     } else {
-      return (
         <div className="container mt-4">
           <div className="row text-center">
             <h1 className="col-12">
@@ -92,7 +94,7 @@ class Challenge extends React.Component {
             </h1>
           </div>
           <div className="row justify-content-center">
-            {/* <Challenger className="col-12 col-md-6">
+            <Challenger className="col-12 col-md-6">
               <img
                 alt={this.state.posts[0].title}
                 data-challenger={this.state.posts[1]._id}
@@ -118,12 +120,23 @@ class Challenge extends React.Component {
                   ".png"
                 }
               />
-            </Challenger> */}
+            </Challenger>
           </div>
-        </div>
-      );
-    }
+        </div>       
+    } */}
+      </PaperContainer>
+    );
   }
-}
+};
 
-export default Challenge;
+const mapStateToProps = ({ battle: { competitors, currentChallenge } }) => {
+  return {
+    competitors,
+    currentChallenge
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { fetchPosts }
+)(Rate);

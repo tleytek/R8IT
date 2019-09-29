@@ -2,8 +2,8 @@ import axios from "axios";
 import {
   CREATE_CHALLENGE,
   FETCH_CHALLENGES,
-  CREATE_POST,
-  FETCH_USER
+  FETCH_USER,
+  FETCH_POSTS
 } from "./types";
 
 export const fetchUser = () => async dispatch => {
@@ -23,12 +23,7 @@ export const fetchChallenges = () => async dispatch => {
   dispatch({ type: FETCH_CHALLENGES, payload: response.data });
 };
 
-export const createPost = ({
-  challenge,
-  title,
-  description,
-  image
-}) => async dispatch => {
+export const createPost = async ({ challenge, title, description, image }) => {
   let formData = new FormData();
   formData.append("challengeId", challenge);
   formData.append("title", title);
@@ -39,6 +34,9 @@ export const createPost = ({
   };
 
   const response = await axios.post("/api/posts/create", formData, config);
+};
 
-  dispatch({ type: CREATE_POST, payload: response.data });
+export const fetchPosts = quantity => async dispatch => {
+  const response = await axios.get(`/api/posts/random/${quantity}`);
+  dispatch({ type: FETCH_POSTS, payload: response.data });
 };

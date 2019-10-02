@@ -6,7 +6,6 @@ import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
 
 import App from "./pages/App";
-import registerServiceWorker from "./registerServiceWorker";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -20,4 +19,3 @@ ReactDOM.render(
   </Provider>,
   document.querySelector("#root")
 );
-registerServiceWorker();

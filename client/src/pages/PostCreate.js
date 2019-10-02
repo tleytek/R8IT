@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Field, reduxForm } from "redux-form";
-import { fetchChallenges, createPost } from "../actions";
+import { fetchChallenges } from "../actions";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import PaperContainer from "../components/PaperContainer";
@@ -8,6 +8,7 @@ import Select from "../components/Select";
 import TextField from "../components/TextField";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import { createPost } from "../API";
 
 const renderFileInput = props => {
   const { className, setImagePreview } = props;
@@ -48,7 +49,7 @@ const PostCreate = props => {
   });
 
   const onSubmit = formValues => {
-    props.createPost(formValues);
+    createPost(formValues);
     setImagePreview(null);
   };
 
@@ -96,7 +97,7 @@ const PostCreate = props => {
           />
         </div>
         <div>
-          <img src={imagePreview} className={classes.img} />
+          <img src={imagePreview} alt="user-preview" className={classes.img} />
         </div>
         <Button
           type="submit"
@@ -112,7 +113,7 @@ const PostCreate = props => {
 };
 
 const formWrapped = reduxForm({
-  form: "createPost"
+  form: "postCreate"
 })(PostCreate);
 
 const mapStateToProps = state => {
@@ -123,7 +124,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchChallenges, createPost }
+  { fetchChallenges }
 )(formWrapped);
 
 const useStyles = makeStyles(theme => ({

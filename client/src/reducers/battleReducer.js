@@ -1,11 +1,18 @@
-import { FETCH_POSTS } from "../actions/types";
+import { PREPARE_BATTLE } from "../actions/types";
 
-export default (state = {}, action) => {
-  const { payload: { competitors, currentChallenge } = {} } = action;
+const INITIAL_STATE = {
+  competitors: [],
+  currentChallenge: { verb: "", noun: "" }
+};
 
+export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case FETCH_POSTS:
-      return { ...state, competitors, currentChallenge };
+    case PREPARE_BATTLE:
+      return {
+        ...state,
+        competitors: action.payload.competitors,
+        currentChallenge: action.payload.currentChallenge
+      };
     default:
       return state;
   }

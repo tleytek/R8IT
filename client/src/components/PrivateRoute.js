@@ -1,17 +1,15 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import LinearProgress from "../components/LinearProgress";
 
 // https://www.youtube.com/watch?v=ojYbcon588A
 // watch this video to understand the wierd syntax here
-const PrivateRoute = ({ component: Component, auth, ...rest }) => {
+const PrivateRoute = ({ component: Component, user, ...rest }) => {
   return (
     <Route
       {...rest}
       render={props => {
-        switch (auth) {
+        switch (user) {
           case null:
             return <div />;
           case false:
@@ -28,10 +26,11 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
   );
 };
 
-const mapStateToProps = ({ auth }) => {
+const mapStateToProps = state => {
+  console.log(state);
   return {
-    auth
+    user: state.user
   };
 };
 
-export default connect(mapStateToProps)(withRouter(PrivateRoute));
+export default connect(mapStateToProps)(PrivateRoute);

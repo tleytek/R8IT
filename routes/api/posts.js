@@ -24,7 +24,6 @@ router.post(
   multer(multerOptions).single("image"),
   postController.submitPost
 );
-router.get("/random/:size", postController.getRandomPosts);
 
 // Technique #2
 // router.route('/getPosts/:period?').get(postController.getPosts);

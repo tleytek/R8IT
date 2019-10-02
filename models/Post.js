@@ -5,7 +5,7 @@ const { ObjectId } = mongoose.Schema.Types;
 const postSchema = new mongoose.Schema({
   title: { type: String, required: true, trim: true },
   description: { type: String, trim: true },
-  eloRank: { type: Number, default: 1500 },
+  skill: { type: Array, default: [25, 8.333333333333334] },
   cloudinaryRef: { type: String, required: true },
   challengeId: {
     type: ObjectId,

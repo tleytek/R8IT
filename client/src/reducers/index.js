@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 import { reducer as formReducer } from "redux-form";
-import battleReducer from "./battleReducer";
 import challengeReducer from "./challengeReducer";
-import authReducer from "./authReducer";
+import userReducer from "./userReducer";
+import battleReducer from "./battleReducer";
 
 export default combineReducers({
-  auth: authReducer,
+  user: userReducer,
   battle: battleReducer,
   challenges: challengeReducer,
   form: formReducer

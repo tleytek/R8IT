@@ -3,7 +3,7 @@ import {
   CREATE_CHALLENGE,
   FETCH_CHALLENGES,
   FETCH_USER,
-  FETCH_POSTS
+  PREPARE_BATTLE
 } from "./types";
 
 export const fetchUser = () => async dispatch => {
@@ -23,20 +23,7 @@ export const fetchChallenges = () => async dispatch => {
   dispatch({ type: FETCH_CHALLENGES, payload: response.data });
 };
 
-export const createPost = async ({ challenge, title, description, image }) => {
-  let formData = new FormData();
-  formData.append("challengeId", challenge);
-  formData.append("title", title);
-  formData.append("description", description ? description : "");
-  formData.append("image", image);
-  const config = {
-    headers: { "content-type": "multipart/form-data" }
-  };
-
-  const response = await axios.post("/api/posts/create", formData, config);
-};
-
-export const fetchPosts = quantity => async dispatch => {
-  const response = await axios.get(`/api/posts/random/${quantity}`);
-  dispatch({ type: FETCH_POSTS, payload: response.data });
+export const prepareBattle = () => async dispatch => {
+  const response = await axios.get("/api/battle/prepare-battle");
+  dispatch({ type: PREPARE_BATTLE, payload: response.data });
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -34,6 +34,7 @@ const Header = props => {
   const classes = useStyles();
 
   const renderAuth = () => {
+    // console.log(props.auth);
     switch (props.auth) {
       case null:
         return;
@@ -118,11 +119,9 @@ const Header = props => {
     </AppBar>
   );
 };
-
 const mapStateToProps = state => {
   return {
     auth: state.auth
   };
 };
-
 export default connect(mapStateToProps)(Header);

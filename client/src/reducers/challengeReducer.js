@@ -6,7 +6,6 @@ export default (state = {}, action) => {
     case CREATE_CHALLENGE:
       return { ...state, [action.payload.id]: action.payload };
     case FETCH_CHALLENGES:
-      // return { ...state, ..._.mapKeys(action.payload, "_id") };
       return { ...state, ...action.payload };
     default:
       return state;

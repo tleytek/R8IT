@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Router, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchUser } from "../actions";
@@ -14,29 +14,21 @@ import ChallengeCreate from "./ChallengeCreate";
 // import Categories from './r8it/categories';
 // import Admin from './r8it/admin';
 import history from "../history";
-import { CssBaseline, withStyles } from "@material-ui/core";
-
-const styles = theme => ({
-  paper: {
-    padding: theme.spacing(2),
-    margin: theme.spacing(2)
-  }
-});
+import { CssBaseline } from "@material-ui/core";
 
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
   }
   render() {
-    const { classes, auth } = this.props;
     return (
       <CssBaseline>
         <Router history={history}>
-          <React.Fragment>
-            <Header auth={auth} />
+          <Fragment>
+            <Header />
             <Switch>
               {/* <Route exact path="/dashboard" component={Dashboard} /> */}
-              <PrivateRoute exact path="/" component={Rate} />
+              <Route exact path="/" component={Rate} />
               {/* <Route exact path="/review/:postId" component={Post} /> */}
               {/* <Route exact path="/review" component={PostList} /> */}
               <PrivateRoute path="/compete" component={PostCreate} />
@@ -45,15 +37,14 @@ class App extends Component {
               {/* <Route exact path="/SuperSecretAdminPage" component={Admin} /> */}
               <Route path="/login" component={Login} />
             </Switch>
-          </React.Fragment>
+          </Fragment>
         </Router>
       </CssBaseline>
     );
   }
 }
-const appWithStyles = withStyles(styles)(App);
 
 export default connect(
   null,
   { fetchUser }
-)(appWithStyles);
+)(App);

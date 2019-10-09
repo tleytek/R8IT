@@ -5,3 +5,4 @@ export const CREATE_POST = "CREATE_POST";
 export const FETCH_CHALLENGES = "FETCH_CHALLENGES";
 export const FETCH_USER = "FETCH_USER";
 export const SAVE_SUCCESS = "SAVE_SUCCESS";
+export const CLEAR_BATTLE = "CLEAR_BATTLE";

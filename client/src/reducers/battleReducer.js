@@ -1,4 +1,4 @@
-import { PREPARE_BATTLE } from "../actions/types";
+import { PREPARE_BATTLE, CLEAR_BATTLE } from "../actions/types";
 
 const INITIAL_STATE = {
   competitors: [],
@@ -13,6 +13,8 @@ export default (state = INITIAL_STATE, action) => {
         competitors: action.payload.competitors,
         currentChallenge: action.payload.currentChallenge
       };
+    case CLEAR_BATTLE:
+      return INITIAL_STATE;
     default:
       return state;
   }

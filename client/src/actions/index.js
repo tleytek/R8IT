@@ -3,7 +3,8 @@ import {
   CREATE_CHALLENGE,
   FETCH_CHALLENGES,
   FETCH_USER,
-  PREPARE_BATTLE
+  PREPARE_BATTLE,
+  CLEAR_BATTLE
 } from "./types";
 
 export const fetchUser = () => async dispatch => {
@@ -26,4 +27,8 @@ export const fetchChallenges = () => async dispatch => {
 export const prepareBattle = () => async dispatch => {
   const response = await axios.get("/api/battle/prepare-battle");
   dispatch({ type: PREPARE_BATTLE, payload: response.data });
+};
+
+export const clearBattle = () => async dispatch => {
+  dispatch({ type: CLEAR_BATTLE });
 };

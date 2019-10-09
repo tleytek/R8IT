@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -15,26 +15,34 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary
   },
   toolbar: {
-    flexWrap: "wrap"
+    flexWrap: "nowrap"
   },
-  toolbarTitle: {
-    flexGrow: 1
+  homeLink: {
+    display: "flex",
+    textDecoration: "none",
+    padding: "10px",
+    color: "#fff"
+  },
+  linkList: {
+    display: "flex",
+    flexGrow: 1,
+    justifyContent: "flex-end",
+    alignItems: "center"
   },
   link: {
-    margin: theme.spacing(1, 1.5)
+    padding: theme.spacing(1, 1.5)
   },
   logo: {
     height: "40px",
     marginRight: "10px"
   },
-  button: { textDecoration: "none", color: "inherit" }
+  button: { textDecoration: "none", color: "inherit", margin: "0px 10px" }
 }));
 
 const Header = props => {
   const classes = useStyles();
 
   const renderAuth = () => {
-    // console.log(props.auth);
     switch (props.auth) {
       case null:
         return;
@@ -66,24 +74,20 @@ const Header = props => {
   return (
     <AppBar position="static" elevation={0} className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
-        <img
-          className={classes.logo}
-          src="/media/logo-r8it.png"
-          alt="R8IT logo"
-        />
-
-        <Typography
-          variant="h4"
-          color="inherit"
-          noWrap
-          className={classes.toolbarTitle}
-        >
-          R8IT
-        </Typography>
-        <nav>
+        <RouterLink to="/" className={classes.homeLink}>
+          <img
+            className={classes.logo}
+            src="/media/logo-r8it.png"
+            alt="R8IT logo"
+          />
+          <Typography variant="h4" color="inherit">
+            R8IT
+          </Typography>
+        </RouterLink>
+        <nav className={classes.linkList}>
           <Link
             component={RouterLink}
-            to="/"
+            to="/rate"
             className={classes.link}
             color="inherit"
           >
@@ -121,7 +125,7 @@ const Header = props => {
 };
 const mapStateToProps = state => {
   return {
-    auth: state.auth
+    auth: state.user
   };
 };
 export default connect(mapStateToProps)(Header);

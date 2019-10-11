@@ -4,7 +4,8 @@ import {
   FETCH_CHALLENGES,
   FETCH_USER,
   PREPARE_BATTLE,
-  CLEAR_BATTLE
+  CLEAR_BATTLE,
+  FETCH_POSTS
 } from "./types";
 
 export const fetchUser = () => async dispatch => {
@@ -31,4 +32,9 @@ export const prepareBattle = () => async dispatch => {
 
 export const clearBattle = () => async dispatch => {
   dispatch({ type: CLEAR_BATTLE });
+};
+
+export const fetchPosts = () => async dispatch => {
+  const response = await axios.get("/api/posts");
+  dispatch({ type: FETCH_POSTS, payload: response.data });
 };

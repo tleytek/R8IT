@@ -3,13 +3,18 @@ import { connect } from "react-redux";
 import PaperContainer from "../components/PaperContainer";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Fade from "@material-ui/core/Fade";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { prepareBattle, clearBattle } from "../actions";
 import { saveResult } from "../API";
 
 class Rate extends Component {
-  componentDidMount() {
+  state = {
+    rated: false
+  };
+  async componentDidMount() {
     this.props.prepareBattle();
+    this.setState({ rated: true });
   }
 
   componentWillUnmount() {
@@ -18,6 +23,7 @@ class Rate extends Component {
 
   onClick = async ({ target: { id: winnerId } }) => {
     const { competitors, prepareBattle } = this.props;
+    await this.setState({ rated: false });
     const results = competitors.map((competitor, index) => {
       if (String(index) !== winnerId) {
         competitor.rank = 2;
@@ -28,20 +34,25 @@ class Rate extends Component {
     });
 
     const response = await saveResult(results);
-    response.status === 200 ? prepareBattle() : console.log("bad response");
+    response.status === 200
+      ? await prepareBattle()
+      : console.log("bad response");
+    await this.setState({ rated: true });
   };
 
   renderCompetitors = () => {
     const { competitors } = this.props;
     return competitors.map(({ _id, cloudinaryUrl, title }, index) => {
       return (
-        <img
-          key={_id}
-          src={cloudinaryUrl}
-          alt={title}
-          id={`${index}`}
-          onClick={this.onClick}
-        />
+        <Fade in={this.state.rated} timeout={{ enter: 2000, exit: 100 }}>
+          <img
+            key={_id}
+            src={cloudinaryUrl}
+            alt={title}
+            id={`${index}`}
+            onClick={this.onClick}
+          />
+        </Fade>
       );
     });
   };
@@ -50,13 +61,15 @@ class Rate extends Component {
     const { competitors, currentChallenge } = this.props;
     return (
       <PaperContainer>
-        <Typography variant="h2" gutterBottom align="center">
-          {currentChallenge ? (
-            `${currentChallenge.verb} ${currentChallenge.noun}?`
-          ) : (
-            <Skeleton />
-          )}
-        </Typography>
+        <Fade in={this.state.rated}>
+          <Typography variant="h2" gutterBottom align="center">
+            {currentChallenge ? (
+              `${currentChallenge.verb} ${currentChallenge.noun}?`
+            ) : (
+              <Skeleton />
+            )}
+          </Typography>
+        </Fade>
         <Grid container justify="space-between" alignItems="center">
           {competitors.length === 0 ? (
             <React.Fragment>

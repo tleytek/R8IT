@@ -1,61 +1,66 @@
 import React from "react";
-import styled from "styled-components";
+import { makeStyles } from "@material-ui/core/styles";
 
-import Navigation from "./about/navigation";
-
-const FullScreenLanding = styled.div`
-  width: 100%;
-  height: 100vh;
-
-  overflow: hidden;
-
-  background-color: blue;
-
-  div {
-    background-color: white;
-    width: 100%;
-    height: 100%;
-    opacity: 0.8;
-
-    img {
-      min-height: 100%;
-      max-width: 100%;
+const useStyles = makeStyles(theme => ({
+  fullScreenLanding: {
+    width: "100%",
+    height: "calc(100vh - 64px)",
+    overflow: "hidden",
+    "& div": {
+      backgroundColor: "blue",
+      width: "100%",
+      height: "100%",
+      opacity: "0.4",
+      "& img": {
+        minHeight: "100%",
+        maxWidth: "100%"
+      }
+    }
+  },
+  section: {
+    height: "400px",
+    width: "100%",
+    "& .even": {
+      backgroundColor: "purple"
+    },
+    "& .odd": {
+      backgroundColor: "white"
     }
   }
-`;
-
-const EvenSection = styled.div`
-  background-color: purple;
-  height: 400px;
-  width: 100%;
-`;
-
-const OddSection = styled.div`
-  background-color: white;
-  height: 400px;
-  width: 100%;
-`;
+  // evenSection: {
+  //   backgroundColor: "purple",
+  //   height: "400px",
+  //   width: "100%"
+  // },
+  // oddSection: {
+  //   backgroundColor: 'white',
+  //   height: '400px',
+  //   width: '100%'
+  // }
+}));
 
 const About = () => {
+  const classes = useStyles();
   return (
     <div>
-      <Navigation />
-      <FullScreenLanding>
+      <div className={classes.fullScreenLanding}>
         <a name="home" />
         <div>
-          <img src="./media/rps.jpg" />
+          <img src="./media/arm-wrestling-bar-bet-4417.jpg" />
         </div>
-      </FullScreenLanding>
+      </div>
       <div />
-      <EvenSection>
-        <a name="section-1">Stuff</a>
-      </EvenSection>
-      <OddSection>
+      <div className={classes.section}>
+        <div className={classes.even}>
+          <a name="section-1">Stuff</a>
+        </div>
+      </div>
+      <div className={classes.section}>
         <a name="section-2">More Stuff</a>
-      </OddSection>
-      <EvenSection name="section-3">
+      </div>
+      <div className={classes.section}>
         <a name="section-3">Event More Stuff</a>
-      </EvenSection>
+      </div>
     </div>
   );
 };

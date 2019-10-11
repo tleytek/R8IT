@@ -7,8 +7,8 @@ import PrivateRoute from "../components/PrivateRoute";
 import Login from "./Login";
 import Rate from "./Rate";
 // import Post from './r8it/postDisplay';
-// import PostList from './r8it/postsDisplay';0
-// import Dashboard from "./dashboard";
+import PostList from "./postsDisplay";
+import About from "./about";
 import PostCreate from "./PostCreate";
 import ChallengeCreate from "./ChallengeCreate";
 // import Categories from './r8it/categories';
@@ -27,10 +27,10 @@ class App extends Component {
           <Fragment>
             <Header />
             <Switch>
-              {/* <Route exact path="/dashboard" component={Dashboard} /> */}
-              <Route exact path="/rate" component={Rate} />
+              <Route exact path="/" component={About} />
+              <PrivateRoute exact path="/rate" component={Rate} />
               {/* <Route exact path="/review/:postId" component={Post} /> */}
-              {/* <Route exact path="/review" component={PostList} /> */}
+              <PrivateRoute exact path="/ranks" component={PostList} />
               <PrivateRoute path="/compete" component={PostCreate} />
               <PrivateRoute path="/create" component={ChallengeCreate} />
               {/* <Route exact path="/category" component={Categories} /> */}

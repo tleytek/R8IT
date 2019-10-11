@@ -17,8 +17,8 @@ const multerOptions = {
 };
 
 // Technique #1
-router.get("/findPosts/:period?", postController.getPosts);
-router.get("/findPost/:postId", postController.getPost);
+router.get("/fetchPosts/:period?", postController.getPosts);
+router.get("/fetchPost/:postId", postController.getPost);
 router.post(
   "/create",
   multer(multerOptions).single("image"),

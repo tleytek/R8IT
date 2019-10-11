@@ -10,7 +10,7 @@ exports.login = (req, res, next) => {
 exports.callback = (req, res, next) => {
   passport.authenticate("google", {
     successRedirect: "/",
-    failureRedirect: "/test"
+    failureRedirect: "/"
   })(req, res, next);
 };
 

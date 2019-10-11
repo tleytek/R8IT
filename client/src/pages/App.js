@@ -28,7 +28,7 @@ class App extends Component {
             <Header />
             <Switch>
               <Route exact path="/" component={About} />
-              <PrivateRoute exact path="/rate" component={Rate} />
+              <Route exact path="/rate" component={Rate} />
               {/* <Route exact path="/review/:postId" component={Post} /> */}
               <PrivateRoute exact path="/ranks" component={PostList} />
               <PrivateRoute path="/compete" component={PostCreate} />

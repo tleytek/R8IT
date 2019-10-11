@@ -14,7 +14,11 @@ require("./models/Post");
 require("./models/User");
 require("./passport");
 const routes = require("./routes");
-
+// Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === "production") {
+  // app.use(helmet());
+  app.use(express.static("client/build"));
+}
 // Body Parser built-in to Express as on version 4.16
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -54,12 +58,6 @@ app.use(passport.session());
 
 // Routes
 app.use(routes);
-
-// Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === "production") {
-  // app.use(helmet());
-  app.use(express.static("client/build"));
-}
 
 app.listen(PORT, function() {
   console.log(`🌎 ==> Server now on port ${PORT}!`);

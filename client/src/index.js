@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
+import "semantic-ui-css/semantic.min.css";
 
 import App from "./pages/App";
 

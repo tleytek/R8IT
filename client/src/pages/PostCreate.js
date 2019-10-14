@@ -39,7 +39,7 @@ const renderFileInput = props => {
   );
 };
 
-const PostCreate = props => {
+function PostCreate(props) {
   const classes = useStyles();
 
   const [imagePreview, setImagePreview] = useState();
@@ -50,7 +50,7 @@ const PostCreate = props => {
 
   const onSubmit = formValues => {
     createPost(formValues);
-    setImagePreview(null);
+    setImagePreview(false);
   };
 
   return (
@@ -96,9 +96,15 @@ const PostCreate = props => {
             className={classes.textField}
           />
         </div>
-        <div>
-          <img src={imagePreview} alt="user-preview" className={classes.img} />
-        </div>
+        {imagePreview && (
+          <div>
+            <img
+              src={imagePreview}
+              alt="user-preview"
+              className={classes.img}
+            />
+          </div>
+        )}
         <Button
           type="submit"
           color="primary"
@@ -110,7 +116,7 @@ const PostCreate = props => {
       </form>
     </PaperContainer>
   );
-};
+}
 
 const formWrapped = reduxForm({
   form: "postCreate"

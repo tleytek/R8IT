@@ -4,7 +4,7 @@ const multer = require("multer");
 const multerOptions = {
   storage: multer.memoryStorage(),
   limits: {
-    // storing images files up to 1mb
+    // storing images files up to 5mb
     fileSize: 1024 * 1024 * 5
   },
   fileFilter: (req, file, next) => {
@@ -17,8 +17,8 @@ const multerOptions = {
 };
 
 // Technique #1
-router.get("/fetchPosts/:period?", postController.getPosts);
-router.get("/fetchPost/:postId", postController.getPost);
+router.get("/fetchPosts/:period?", postController.fetchPosts);
+router.get("/fetchPost/:postId", postController.fetchPost);
 router.post(
   "/create",
   multer(multerOptions).single("image"),

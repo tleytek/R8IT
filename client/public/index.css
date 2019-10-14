@@ -1,5 +1,8 @@
+html,
+body,
 #root {
-  height: 100vh;
+  min-height: 100vh;
+  max-height: 100%;
   background-image: url("./media/brilliant.png");
   background-repeat: repeat;
   background-color: #3f51b5;

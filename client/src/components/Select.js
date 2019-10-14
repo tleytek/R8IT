@@ -28,14 +28,14 @@ const SimpleSelect = ({ data, input, ...custom }) => {
 
   return (
     <FormControl {...custom}>
-      <InputLabel htmlFor="category-simple">Category</InputLabel>
+      <InputLabel htmlFor="select-simple">Category</InputLabel>
       <Select
         {...input}
         value={values.category}
         onChange={handleChange}
         inputProps={{
           name: "category",
-          id: "category-simple"
+          id: "select-simple"
         }}
       >
         {renderList(data)}

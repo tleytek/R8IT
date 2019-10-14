@@ -44,7 +44,7 @@ class Rate extends Component {
     const { competitors } = this.props;
     return competitors.map(({ _id, cloudinaryUrl, title }, index) => {
       return (
-        <Fade in={this.state.rated} timeout={{ enter: 2000, exit: 100 }}>
+        <Fade in={this.state.rated}>
           <img
             key={_id}
             src={cloudinaryUrl}
@@ -62,13 +62,13 @@ class Rate extends Component {
     return (
       <PaperContainer>
         <Fade in={this.state.rated}>
-          <Typography variant="h2" gutterBottom align="center">
-            {currentChallenge ? (
-              `${currentChallenge.verb} ${currentChallenge.noun}?`
-            ) : (
-              <Skeleton />
-            )}
-          </Typography>
+          {currentChallenge.verb ? (
+            <Typography variant="h2" gutterBottom align="center">
+              {currentChallenge.verb} {currentChallenge.noun}?
+            </Typography>
+          ) : (
+            <Skeleton height={60} />
+          )}
         </Fade>
         <Grid container justify="space-between" alignItems="center">
           {competitors.length === 0 ? (

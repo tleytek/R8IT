@@ -11,41 +11,45 @@ cloudinary.config({
   api_secret: process.env.API_SECRET
 });
 
-exports.getPosts = async (req, res) => {
+exports.fetchPosts = async (req, res) => {
   let query = {};
+  // if (period) {
+  //   let calculatedPeriod;
 
-  if (period) {
-    let calculatedPeriod;
+  //   switch (period) {
+  //     case "24 Hours":
+  //       calculatedPeriod = moment().subtract(1, "days");
+  //       break;
+  //     case "Last Week":
+  //       calculatedPeriod = moment().subtract(1, "weeks");
+  //       break;
+  //     case "Last Month":
+  //       calculatedPeriod = moment().subtract(1, "months");
+  //       break;
+  //     case "Last Year":
+  //       calculatedPeriod = moment().subtract(1, "years");
+  //       break;
+  //     default:
+  //       calculatedPeriod = moment().subtract(1, "years");
+  //       break;
+  //   }
 
-    switch (period) {
-      case "24 Hours":
-        calculatedPeriod = moment().subtract(1, "days");
-        break;
-      case "Last Week":
-        calculatedPeriod = moment().subtract(1, "weeks");
-        break;
-      case "Last Month":
-        calculatedPeriod = moment().subtract(1, "months");
-        break;
-      case "Last Year":
-        calculatedPeriod = moment().subtract(1, "years");
-        break;
-      default:
-        calculatedPeriod = moment().subtract(1, "years");
-        break;
-    }
+  //   query.dateCreated = { $gte: calculatedPeriod.toISOString() };
+  // }
 
-    query.dateCreated = { $gte: calculatedPeriod.toISOString() };
-  }
+  query.dateCreated = {
+    $gte: moment()
+      .subtract(1, "years")
+      .toISOString()
+  };
 
   const posts = await Post.find(query)
     .limit(20)
     .sort("-eloRank");
-
   res.json(posts);
 };
 
-exports.getPost = async (req, res) => {
+exports.fetchPost = async (req, res) => {
   const { postId } = req.body;
   const post = await Post.findById(postId);
   post.image = await getCloudinaryImage(post.cloudinaryRef);

@@ -10,6 +10,7 @@ import {
 
 export const fetchUser = () => async dispatch => {
   const userId = await axios.get("/api/users/id");
+
   dispatch({ type: FETCH_USER, payload: userId.data });
 };
 
@@ -27,6 +28,7 @@ export const fetchChallenges = () => async dispatch => {
 
 export const prepareBattle = () => async dispatch => {
   const response = await axios.get("/api/battle/prepare-battle");
+
   dispatch({ type: PREPARE_BATTLE, payload: response.data });
 };
 
@@ -35,6 +37,6 @@ export const clearBattle = () => async dispatch => {
 };
 
 export const fetchPosts = () => async dispatch => {
-  const response = await axios.get("/api/posts");
+  const response = await axios.get("/api/posts/fetchPosts");
   dispatch({ type: FETCH_POSTS, payload: response.data });
 };

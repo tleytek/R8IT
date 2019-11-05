@@ -87,7 +87,7 @@ const Header = props => {
         <nav className={classes.linkList}>
           <Link
             component={RouterLink}
-            to="/rate"
+            to="/"
             className={classes.link}
             color="inherit"
           >

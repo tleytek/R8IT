@@ -145,7 +145,7 @@ const useStyles = makeStyles(theme => ({
   img: {
     margin: theme.spacing(1),
     borderRadius: "8px",
-    minWidth: "50%",
+    maxWidth: "50%",
     alignSelf: "center"
   }
 }));

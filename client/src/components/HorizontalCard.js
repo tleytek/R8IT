@@ -34,13 +34,14 @@ const useStyles = makeStyles(theme => ({
   playIcon: {
     height: 38,
     width: 38
+  },
+  score: {
+    margin: "1em"
   }
 }));
 
-export default ({ postData: { title, _id, cloudinaryRef } = {} }) => {
+export default ({ postData: { title, _id, cloudinaryRef, skill } = {} }) => {
   const classes = useStyles();
-  const theme = useTheme();
-  console.log(title);
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -53,8 +54,12 @@ export default ({ postData: { title, _id, cloudinaryRef } = {} }) => {
           <Typography component="h2" variant="h2">
             {title}
           </Typography>
-          <Typography variant="subtitle1" color="textSecondary">
-            {_id}
+          <Typography
+            variant="h4"
+            color="textSecondary"
+            className={classes.score}
+          >
+            Score: {Math.round(skill[0] * 100)}
           </Typography>
         </CardContent>
       </div>

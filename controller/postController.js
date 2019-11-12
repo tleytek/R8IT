@@ -13,29 +13,6 @@ cloudinary.config({
 
 exports.fetchPosts = async (req, res) => {
   let query = {};
-  // if (period) {
-  //   let calculatedPeriod;
-
-  //   switch (period) {
-  //     case "24 Hours":
-  //       calculatedPeriod = moment().subtract(1, "days");
-  //       break;
-  //     case "Last Week":
-  //       calculatedPeriod = moment().subtract(1, "weeks");
-  //       break;
-  //     case "Last Month":
-  //       calculatedPeriod = moment().subtract(1, "months");
-  //       break;
-  //     case "Last Year":
-  //       calculatedPeriod = moment().subtract(1, "years");
-  //       break;
-  //     default:
-  //       calculatedPeriod = moment().subtract(1, "years");
-  //       break;
-  //   }
-
-  //   query.dateCreated = { $gte: calculatedPeriod.toISOString() };
-  // }
 
   query.dateCreated = {
     $gte: moment()
@@ -43,9 +20,10 @@ exports.fetchPosts = async (req, res) => {
       .toISOString()
   };
 
-  const posts = await Post.find(query)
-    .limit(20)
-    .sort("-eloRank");
+  const posts = await Post.find();
+  posts.sort((a, b) => {
+    return b.skill[0] - a.skill[0];
+  });
   res.json(posts);
 };
 

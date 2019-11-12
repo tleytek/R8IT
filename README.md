@@ -1,5 +1,7 @@
 # R8IT
 
+https://r8it.herokuapp.com/
+
 ## Concept: A socially competitive site
 
 A website built for the socially opiniated.
